@@ -49,12 +49,12 @@ def load(env_file: Path | str = ".env", environ: dict[str, str] | None = None) -
     for part in filter(None, (p.strip() for p in env.get("ADMIN_IDS", "").split(","))):
         if not part.isdigit():
             raise ConfigError(
-                f"ADMIN_IDS — числовые id через запятую, а {part!r} не число. Свой id покажет @userinfobot")
+                f"Укажите в ADMIN_IDS числовые id через запятую. {part!r} не число. Свой id покажет @userinfobot")
         admins.add(int(part))
 
-    demo = env.get("DEMO_PAYMENTS", "1").strip().lower()
+    demo = (env.get("DEMO_PAYMENTS") or "1").strip().lower()
     if demo not in ("1", "0", "true", "false", "yes", "no"):
-        raise ConfigError("DEMO_PAYMENTS — 1 или 0")
+        raise ConfigError("Укажите в DEMO_PAYMENTS 1 или 0")
 
     return Config(
         token=token,

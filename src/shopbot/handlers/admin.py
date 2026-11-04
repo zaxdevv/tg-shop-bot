@@ -29,7 +29,7 @@ async def stats(message: Message, shop: Shop, config: Config) -> None:
     count, revenue, top = shop.stats()
     lines = [f"<b>Оплаченные заказы:</b> {count}", f"<b>Выручка:</b> {rub(revenue)}"]
     if top:
-        lines += ["", "Чаще всего берут:"] + [f"{i}. {title} — {sold} шт." for i, (title, sold) in enumerate(top, 1)]
+        lines += ["", "Чаще всего берут:"] + [f"{i}. {title}: {sold} шт." for i, (title, sold) in enumerate(top, 1)]
     await message.answer("\n".join(lines))
 
 

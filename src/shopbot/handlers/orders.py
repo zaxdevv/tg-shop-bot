@@ -29,7 +29,7 @@ class Checkout(StatesGroup):
 
 
 def normalize_phone(text: str) -> str | None:
-    """+7 (900) 123-45-67, 8 900 123 45 67 and 89001234567 all become +79001234567."""
+    """Accept domestic and international prefixes and remove separators."""
     digits = re.sub(r"[\s()\-]", "", text)
     if re.fullmatch(r"(\+7|8)\d{10}", digits):
         return "+7" + digits[-10:]
@@ -37,7 +37,7 @@ def normalize_phone(text: str) -> str | None:
 
 
 def order_text(shop: Shop, order: Order, for_admin: bool = False) -> str:
-    items = "\n".join(f"{escape(t)} — {q} × {rub(p)}" for t, p, q in shop.order_items(order.id))
+    items = "\n".join(f"{escape(t)}: {q} × {rub(p)}" for t, p, q in shop.order_items(order.id))
     lines = [f"<b>Заказ №{order.id}</b> · {STATUSES[order.status]}", "", items, f"Итого: <b>{rub(order.total)}</b>"]
     if for_admin:
         who = f"@{escape(order.username)}" if order.username else f"id {order.user_id}"
@@ -61,7 +61,7 @@ async def checkout(cb: CallbackQuery, state: FSMContext, shop: Shop) -> None:
         return
     await state.set_state(Checkout.name)
     if isinstance(cb.message, Message):
-        await cb.message.answer("Как к вам обращаться? Напишите имя получателя.\n\n/cancel — передумали")
+        await cb.message.answer("Как к вам обращаться? Напишите имя получателя.\n\n/cancel: отменить оформление")
     await cb.answer()
 
 
@@ -75,7 +75,7 @@ async def cancel(message: Message, state: FSMContext) -> None:
 async def got_name(message: Message, state: FSMContext) -> None:
     name = (message.text or "").strip()
     if not 2 <= len(name) <= 60:
-        await message.answer("Имя — от 2 до 60 символов. Напишите ещё раз:")
+        await message.answer("В имени должно быть от 2 до 60 символов. Напишите ещё раз:")
         return
     await state.update_data(name=name)
     await state.set_state(Checkout.phone)

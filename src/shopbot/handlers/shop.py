@@ -33,7 +33,7 @@ async def show(cb: CallbackQuery, text: str, markup: InlineKeyboardMarkup | None
 def cart_text(lines: list[Line]) -> str:
     if not lines:
         return "<b>Корзина пуста</b>\n\nЗагляните в каталог."
-    rows = [f"{escape(ln.product.title)} — {ln.qty} × {rub(ln.product.price)} = {rub(ln.sum)}" for ln in lines]
+    rows = [f"{escape(ln.product.title)}: {ln.qty} × {rub(ln.product.price)} = {rub(ln.sum)}" for ln in lines]
     return "<b>Корзина</b>\n\n" + "\n".join(rows) + f"\n\n<b>Итого: {rub(sum(ln.sum for ln in lines))}</b>"
 
 

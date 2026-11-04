@@ -75,7 +75,7 @@ async def main(out: Path) -> None:
     await tap("Корзина", "cart")
     await tap("Оформить заказ", CartCB(action="checkout").pack())
     await say("Оля")
-    await say("+7 900 000-00-00")
+    await say("+7 000 000-00-00")
     await say("Солодовый переулок, 7, кв. 3, домофон 3К")
     await tap("Всё верно", "confirm:yes")
     order = shop.orders(user_id=CUSTOMER)[0]

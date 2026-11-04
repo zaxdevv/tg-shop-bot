@@ -15,7 +15,7 @@ async def fill_cart_and_checkout(h: Harness) -> None:
     await h.press(ProductCB(action="add", id=1).pack())
     await h.press(CartCB(action="checkout").pack())
     await h.send("Ольга")
-    await h.send("8 (900) 123-45-67")
+    await h.send("8 (000) 000-00-00")
     await h.send("Солодовый переулок, 7, кв. 3")
     await h.press("confirm:yes")
 
@@ -73,7 +73,7 @@ async def test_checkout_rejects_bad_phone_and_short_address(harness):
     await harness.send("Ольга")
     await harness.send("позвоните мне")
     assert "Не получилось разобрать номер" in harness.last_text()
-    await harness.send("+7 900 123 45 67")
+    await harness.send("+7 000 000 00 00")
     await harness.send("дом")
     assert "Адрес слишком короткий" in harness.last_text()
 
@@ -81,7 +81,7 @@ async def test_checkout_rejects_bad_phone_and_short_address(harness):
 async def test_full_order_with_demo_payment(harness, shop):
     await fill_cart_and_checkout(harness)
     [order] = shop.orders()
-    assert order.status == "new" and order.total == 2 * 2490 and order.phone == "+79001234567"
+    assert order.status == "new" and order.total == 2 * 2490 and order.phone == "+70000000000"
     assert shop.cart(CUSTOMER) == []
     assert "Оплатить" in harness.buttons()[0][0]
 
@@ -129,9 +129,9 @@ async def test_stats_only_for_admin(harness):
 
 
 @pytest.mark.parametrize(("raw", "expected"), [
-    ("+7 (900) 123-45-67", "+79001234567"),
-    ("89001234567", "+79001234567"),
-    ("8 900 123 45 67", "+79001234567"),
+    ("+7 (000) 000-00-00", "+70000000000"),
+    ("80000000000", "+70000000000"),
+    ("8 000 000 00 00", "+70000000000"),
     ("123", None),
     ("+1 900 123 45 67", None),
 ])
@@ -149,3 +149,10 @@ def test_config_errors(tmp_path):
     cfg = settings.load(missing, environ={"BOT_TOKEN": "123456789:test-token-for-unit-tests-only-xxxx",
                                           "ADMIN_IDS": "1, 2", "DEMO_PAYMENTS": "0"})
     assert cfg.admins == {1, 2} and not cfg.demo_payments
+    template = tmp_path / "template.env"
+    template.write_text(
+        "BOT_TOKEN=123456789:test-token-for-unit-tests-only-xxxx\nDEMO_PAYMENTS=\nDB_PATH=\n",
+        encoding="utf-8",
+    )
+    defaults = settings.load(template, environ={})
+    assert defaults.demo_payments and defaults.db_path.as_posix() == "data/shop.db"
