@@ -144,8 +144,8 @@ def test_config_errors(tmp_path):
     with pytest.raises(settings.ConfigError, match="не задан BOT_TOKEN"):
         settings.load(missing, environ={})
     with pytest.raises(settings.ConfigError, match="не число"):
-        settings.load(missing, environ={"BOT_TOKEN": "123456789:AAH-abcdefghijklmnopqrstuvwxyz012345",
+        settings.load(missing, environ={"BOT_TOKEN": "123456789:test-token-for-unit-tests-only-xxxx",
                                         "ADMIN_IDS": "1, me"})
-    cfg = settings.load(missing, environ={"BOT_TOKEN": "123456789:AAH-abcdefghijklmnopqrstuvwxyz012345",
+    cfg = settings.load(missing, environ={"BOT_TOKEN": "123456789:test-token-for-unit-tests-only-xxxx",
                                           "ADMIN_IDS": "1, 2", "DEMO_PAYMENTS": "0"})
     assert cfg.admins == {1, 2} and not cfg.demo_payments

@@ -50,7 +50,7 @@ class Harness:
         for router in routers:  # module-level routers attach once per process; each test builds a new dispatcher
             router._parent_router = None
         self.session = RecordingSession()
-        self.bot = Bot("123456789:AAH-abcdefghijklmnopqrstuvwxyz012345", session=self.session,
+        self.bot = Bot("123456789:test-token-for-unit-tests-only-xxxx", session=self.session,
                        default=DefaultBotProperties(parse_mode=ParseMode.HTML))
         self.dp = build_dispatcher(shop, config)
         self.shop = shop
