@@ -27,8 +27,10 @@ body { margin: 0; background: #dfe7ee; font: 15px/1.4 system-ui, sans-serif; }
 .bot { align-self: flex-start; background: #fff; border-bottom-left-radius: 4px; }
 .kb { align-self: flex-start; max-width: 82%; display: grid; gap: 4px; margin-top: -4px; }
 .kb div { display: flex; gap: 4px; }
-.kb span { flex: 1; text-align: center; background: rgba(255,255,255,.65); border-radius: 8px; padding: 7px 8px; font-size: 13px; }
-.toast { align-self: center; background: rgba(0,0,0,.55); color: #fff; padding: 4px 10px; border-radius: 10px; font-size: 13px; }
+.kb span { flex: 1; text-align: center; background: rgba(255,255,255,.65); border-radius: 8px;
+          padding: 7px 8px; font-size: 13px; }
+.toast { align-self: center; background: rgba(0,0,0,.55); color: #fff; padding: 4px 10px;
+         border-radius: 10px; font-size: 13px; }
 """
 
 
