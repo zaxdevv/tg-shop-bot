@@ -4,7 +4,7 @@ Telegram shop bot on aiogram 3 and SQLite: catalog, cart, checkout, admin notifi
 
 Бот магазина настольных игр «Ход». Покупатель листает каталог, собирает корзину, оформляет заказ и оплачивает его в демо-режиме. Администратор получает заказ в личные сообщения и меняет статус кнопкой, а покупателю приходит уведомление. Корзина и заказы лежат в SQLite и переживают перезапуск.
 
-[![tests](https://github.com/hmsusbusas-png/tg-shop-bot/actions/workflows/tests.yml/badge.svg)](https://github.com/hmsusbusas-png/tg-shop-bot/actions/workflows/tests.yml)
+[![tests](https://github.com/zaxdevv/tg-shop-bot/actions/workflows/tests.yml/badge.svg)](https://github.com/zaxdevv/tg-shop-bot/actions/workflows/tests.yml)
 [![MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
 <p>
@@ -35,7 +35,7 @@ Telegram shop bot on aiogram 3 and SQLite: catalog, cart, checkout, admin notifi
 Нужен Python 3.11+ и [uv](https://docs.astral.sh/uv/). Токен бота выдаёт [@BotFather](https://t.me/BotFather), свой числовой id покажет [@userinfobot](https://t.me/userinfobot).
 
 ```sh
-git clone https://github.com/hmsusbusas-png/tg-shop-bot
+git clone https://github.com/zaxdevv/tg-shop-bot
 cd tg-shop-bot
 uv sync
 cp .env.example .env        # в PowerShell: copy .env.example .env
